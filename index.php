@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </head>
-<body class="bg-dark">
+<body style="background: black;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">NotePad</a>
@@ -31,10 +31,9 @@
                             Archivo
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="archivo">
-                            <li><a class="dropdown-item" href="#">Nuevo</a></li>
                             <li><a class="dropdown-item" href="index.php/" target="_blank">Nueva ventana</a></li>
                             <li><a class="dropdown-item" href="#">Abrir...</a></li>
-                            <li><a class="dropdown-item" href="#">Guardar</a></li>
+                            <li><button data-bs-toggle="modal" data-bs-target="#exampleModal" class="dropdown-item" href="#">Guardar</button></li>
                             <li><a class="dropdown-item" href="#">Guardar como...</a></li>
                         </ul>
                     </li>
@@ -67,205 +66,56 @@
         </div>
     </nav>
     <div class="row g-1 d-flex justify-content-center mt-2" style="max-width: 100%;">
-        <div class="col-3 border">
-            <div class="card bg-dark text-white" style="min-height:80vh;">
+        <div class="col-3">
+            <div class="card bg-dark text-white border" style="min-height:80vh;">
                 <h4 class="text-center">Información Archivo</h4>
                 <ul>
-                    <li><b>Nombre:</b> </li>
+                    <li><b>Nombre:</b> N/A</li>
                 </ul>                    
                 <hr>
                 <ul>                    
-                    <li><b>Tipo de Archivo:</b> </li>
-                    <li><b>Ubicación:</b> </li>
-                    <li><b>Tamaño:</b> </li>
-                    <li><b>Tamaño en disco:</b></li>
+                    <li><b>Tipo de Archivo:</b> N/A </li>
+                    <li><b>Ubicación:</b> N/A </li>
+                    <li><b>Tamaño:</b> N/A </li>
+                    <li><b>Tamaño en disco:</b>N/A </li>
                 </ul>                    
                 <hr>
                 <ul>
-                    <li><b>Creado:</b> </li>
-                    <li><b>Modificado:</b> </li>
-                    <li><b>Último Acceso:</b> </li>
+                    <li><b>Creado:</b> N/A </li>
+                    <li><b>Modificado:</b> N/A </li>
+                    <li><b>Último Acceso:</b> N/A </li>
                 </ul>
                 <hr>
                 <small><b>Precaución:</b> Todo lo que se haga en este notepad será guardado en un servidor privado. Evite colocar información sensible.</small>
             </div>
         </div>
         <div class="col-8 border">
-            <textarea name="texto" id="texto" cols="30" rows="10" class="w-100 h-100 bg-dark text-white"></textarea>    
+            <textarea form="guardarForm" name="texto" id="texto" cols="30" rows="10" class="w-100 h-100 bg-dark text-white"></textarea>    
         </div>
     </div>
-    <!-- <div class="row">
-        <div class="col-md-6">
-            <div class="card card-body">
-                <form class="txt-area-input" action="" method="post">
-                    <div class="form-group">
-                        <label class="txtLabel" for="txtName" class="form-control">Ver Archivo</label>
-                        <input class="txtNameInput" type="text" name="txtName">
 
-                        <button class="searchTxt" type="submit" name="txtSubmit1">Ver</button>
-                    </div>
+    <!-- Modal de Guardado -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Guardar Archivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    El archivo será guardado en la raíz de los archivos.
+                    <form id="guardarForm" action="guardar.php" method="post">
+                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Nombre del Archivo (colocar / para crear directorios y carpetas)">
 
-                    <br>
-
-                    <textarea name="txtFile" cols="30" rows="8"><?php
-
-                            if(isset($_POST['txtSubmit1'])){
-                                
-                                if($_POST['txtName'] != null){
-                                    $fileName = $_POST['txtName'];
-                                    $fileTrueName = $fileName.".txt";
-                                    if(file_exists($fileTrueName)){
-
-                                        $file = $fileTrueName;
-
-                                        $current = file_get_contents($file);
-                                        echo $current;
-
-                                    }else{
-                                        $errorMsg = "El archivo no existe, crealo primero.";
-                                        echo $errorMsg;
-                                    }
-
-                                }
-
-                            }
-                            
-                        ?>
-                    </textarea>
-                </form>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-4">
-            <div class="card card-body">
-                <form class="txt-area-input" action="" method="post">
-                    <label class="txtLabel" for="txtName">Editar Archivo</label>
-                    <input class="txtNameInput" type="text" name="txtName">
-
-                    <button class="searchTxt" type="submit" name="txtSubmit">Editar</button>
-                    <br>
-
-                    <textarea name="txtFile" cols="30" rows="8"><?php
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-primary" type="submit">Guardar Archivo</button>
+                        </div>                        
+                    </form>
                     
-                    if(isset($_POST['txtSubmit'])){
-
-                        if($_POST['txtName'] != null){
-                            $file = $_POST['txtName'];
-                            $fileTrueName = $file.".txt";
-                            $comment = $_POST['txtFile'];
-                            echo "Archivo editado y guardado!";
-                            file_put_contents($fileTrueName, $comment);
-                        }
-                    }
-                    
-                    ?></textarea>
-                </form>
+                </div>
             </div>
         </div>
-
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
-
-
-    <div class="col-md-8 offset-md-2">
-
-        <div class="card card-body">
-            <?php
-
-                $errorMsg = null;
-                function displayList(){
-                    if ($handle = opendir(".")) {
-
-                        while (false !== ($entry = readdir($handle))) {
-                        
-                            if ($entry != "." && $entry != "..") {
-                        
-                                echo "$entry\n <br>";
-                            }
-                        }
-                        
-                        echo "<br><br>";
-
-                        closedir($handle);
-                    }
-                }
-
-                function changeList(){
-                    $path = 'carpetadeprueba';
-                    if ($handle = opendir($path)) {
-
-                        while (false !== ($entry = readdir($handle))) {
-                        
-                            if ($entry != "." && $entry != "..") {
-                        
-                                echo "$entry\n <br>";
-                            }
-                        }
-                        
-                        echo "<br><br>";
-
-                        closedir($handle);
-                    }
-                }
-
-                if (!isset($_POST['submit'])) {
-
-                    displayList();
-                    
-                }
-
-                if(isset($_POST['submit'])){
-                    $folderName = $_POST['folderName'];
-                    if($folderName != null){
-                        if(file_exists($folderName)){
-                            $errorMsg = "La carpeta ya existe!";
-                            echo $errorMsg;
-                        }else{
-                            mkdir($folderName);
-                            displayList();
-                        }
-                    
-                    }
-
-                    $fileName = $_POST['fileName'];
-                    if($fileName != null){
-                        if(file_exists($fileName.".txt")){
-                            $errorMsg = "El archivo ya existe!";
-                            echo $errorMsg;
-                        }else{
-                            $createFile = fopen("$fileName.txt", "w");
-                            displayList();
-                        }
-                        
-                    }
-
-                    
-                    
-                }
-
-                if(isset($_POST['txtDone'])){
-                    echo "aaaaaaaaaaaaa";
-                    $comment = $_POST['txtFile'];
-                    echo "$comment";
-                    file_put_contents($fileTrueName, $comment);
-                }
-
-                if(isset($_POST['refresh'])){
-                    require_once('reload.php');
-                }
-
-                if(isset($_POST['carpeta'])){
-                    changeList();
-                }
-
-            ?>
-        </div>
-    </div> -->
 
 </body>
 </html> 
