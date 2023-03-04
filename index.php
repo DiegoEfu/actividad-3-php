@@ -32,25 +32,8 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="archivo">
                             <li><a class="dropdown-item" href="index.php/" target="_blank">Nueva ventana</a></li>
-                            <li><a class="dropdown-item" href="#">Abrir...</a></li>
-                            <li><button data-bs-toggle="modal" data-bs-target="#exampleModal" class="dropdown-item" href="#">Guardar</button></li>
-                            <li><a class="dropdown-item" href="#">Guardar como...</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="edicion" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Edición
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="edicion">
-                            <li><a class="dropdown-item" href="#">Deshacer</a></li>
-                            <li><hr></li>
-                            <li><a class="dropdown-item" href="index.php/" target="_blank">Cortar</a></li>
-                            <li><a class="dropdown-item" href="#">Copiar</a></li>
-                            <li><a class="dropdown-item" href="#">Pegar</a></li>
-                            <li><a class="dropdown-item" href="#">Eliminar</a></li>
-                            <li><hr></li>
-                            <li><a class="dropdown-item" href="index.php/" target="_blank">Seleccionar todo</a></li>
-                            <li><a class="dropdown-item" href="#">Hora y fecha</a></li>                      
+                            <li><button data-bs-toggle="modal" data-bs-target="#abrir" class="dropdown-item">Abrir</button></li>
+                            <li><button data-bs-toggle="modal" data-bs-target="#exampleModal" class="dropdown-item">Guardar</button></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -59,6 +42,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="ayuda">
                             <li><a class="dropdown-item" href="#">Acerca de</a></li>
+                            <li><a class="dropdown-item" href="#">Buscar</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -112,6 +96,54 @@
                         </div>                        
                     </form>
                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Abrir -->
+    <div class="modal fade" id="abrir" tabindex="-1" aria-labelledby="abrir" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Abrir Archivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Lista de Archivos:
+                    <textarea name="lista" id="lista" cols="30" rows="10" disabled>
+<?php
+                            // TODO Aquí hay que cargar la lista 
+
+                            function escanearDirectorio($directorio_inicial, $flag){
+                                $directorio = scandir($directorio_inicial);
+                                foreach ($directorio as $variable) {
+                                    if(!((strlen($variable) == 1 || strlen($variable) == 2) && ($variable == '.' || $variable == '..'))){
+                                        // Verificar que sea un directorio
+                                        if(!(str_contains($variable, '.'))){
+                                            escanearDirectorio($directorio_inicial . '/' . $variable, 1);
+                                        } elseif ($flag == 0){
+                                            echo $variable;
+                                            echo "\r\n";
+                                        } else{
+                                            echo $directorio_inicial . '/' . $variable;
+                                            echo "\r\n";
+                                        }
+                                        
+                                    }
+                                }
+                            }
+
+                            escanearDirectorio(getcwd(), 0);
+                        ?>
+                    </textarea>
+                    <form id="guardarForm" action="guardar.php" method="post">
+                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Nombre del Archivo (colocar / para crear directorios y carpetas)">
+                        Archivos en: /
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-primary" type="submit">Guardar Archivo</button>
+                        </div>                        
+                    </form>                    
                 </div>
             </div>
         </div>
