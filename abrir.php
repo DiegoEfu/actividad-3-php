@@ -31,7 +31,7 @@
                             Archivo
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="archivo">
-                            <li><a class="dropdown-item" href="index.php/" target="_blank">Nueva ventana</a></li>
+                            <li><a class="dropdown-item" href="/index.php" target="_blank">Nueva ventana</a></li>
                             <li><button data-bs-toggle="modal" data-bs-target="#abrir" class="dropdown-item">Abrir</button></li>
                             <li><button data-bs-toggle="modal" data-bs-target="#exampleModal" class="dropdown-item">Guardar</button></li>
                         </ul>
@@ -137,22 +137,26 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Lista de Archivos:
-                    <textarea name="lista" class="form-control" id="lista" cols="30" rows="10" disabled>
+                Lista de Archivos:
+                    <ul>
 <?php
                             function escanearDirectorio($directorio_inicial, $flag){
                                 $directorio = scandir($directorio_inicial);
                                 foreach ($directorio as $variable) {
-                                    if(!((strlen($variable) == 1 || strlen($variable) == 2) && ($variable == '.' || $variable == '..'))){
+                                    if(!((strlen($variable) == 1 || strlen($variable) == 2) && ($variable == "." || $variable == ".."))){
                                         // Verificar que sea un directorio
-                                        if(!(str_contains($variable, '.'))){
-                                            escanearDirectorio($directorio_inicial . '\\' . $variable, 1);
+                                        if(!(str_contains($variable, "."))){
+                                            escanearDirectorio($directorio_inicial . "\\" . $variable, 1);
                                         } elseif ($flag == 0){
+                                            echo "<li>";
                                             echo $variable;
                                             echo "\r\n";
+                                            echo "</li>";
                                         } else{
-                                            echo $directorio_inicial . '\\' . $variable;
+                                            echo "<li>";
+                                            echo $directorio_inicial . "\\" . $variable;
                                             echo "\r\n";
+                                            echo "</li>";
                                         }
                                         
                                     }
@@ -161,7 +165,7 @@
 
                             escanearDirectorio(getcwd(), 0);
                         ?>
-                    </textarea>
+                    </ul>
                     <form id="guardarForm" action="abrir.php" method="post">
                         <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Copie y pegue la ruta del archivo que desee abrir.">
                         <div class="d-flex justify-content-center">

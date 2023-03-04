@@ -111,7 +111,7 @@
                 </div>
                 <div class="modal-body">
                     Lista de Archivos:
-                    <textarea name="lista" class="form-control" id="lista" cols="30" rows="10" disabled>
+                    <ul>
 <?php
                             function escanearDirectorio($directorio_inicial, $flag){
                                 $directorio = scandir($directorio_inicial);
@@ -121,11 +121,15 @@
                                         if(!(str_contains($variable, '.'))){
                                             escanearDirectorio($directorio_inicial . '\\' . $variable, 1);
                                         } elseif ($flag == 0){
+                                            echo '<li>';
                                             echo $variable;
                                             echo "\r\n";
+                                            echo '</li>';
                                         } else{
+                                            echo '<li>';
                                             echo $directorio_inicial . '\\' . $variable;
                                             echo "\r\n";
+                                            echo '</li>';
                                         }
                                         
                                     }
@@ -134,7 +138,7 @@
 
                             escanearDirectorio(getcwd(), 0);
                         ?>
-                    </textarea>
+                    </ul>
                     <form id="guardarForm" action="abrir.php" method="post">
                         <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Copie y pegue la ruta del archivo que desee abrir.">
                         <div class="d-flex justify-content-center">
