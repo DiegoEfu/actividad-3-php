@@ -31,7 +31,7 @@
                             Archivo
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="archivo">
-                            <li><a class="dropdown-item" href="index.php/" target="_blank">Nueva ventana</a></li>
+                            <li><a class="dropdown-item" href="index.php" target="_blank">Nueva ventana</a></li>
                             <li><button data-bs-toggle="modal" data-bs-target="#abrir" class="dropdown-item">Abrir</button></li>
                             <li><button data-bs-toggle="modal" data-bs-target="#exampleModal" class="dropdown-item">Guardar</button></li>
                         </ul>
