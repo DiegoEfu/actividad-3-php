@@ -87,10 +87,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    El archivo será guardado en la raíz de los archivos.
+                    El archivo será guardado en la ruta que ingrese aquí (se crearán las carpetas en caso de que no existan):
                     <form id="guardarForm" action="guardar.php" method="post">
                         <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Nombre del Archivo (colocar / para crear directorios y carpetas)">
-
+                        <small><b>Ejemplo:</b> texto.txt creará un archivo con ese nombre y extensión en la raíz, carpeta/texto.txt creará una carpeta llamada carpeta y pondrá un archivo llamado texto.txt en ella.</small>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" type="submit">Guardar Archivo</button>
                         </div>                        
@@ -112,7 +112,7 @@
                 <div class="modal-body">
                     Lista de Archivos:
                     <textarea name="lista" class="form-control" id="lista" cols="30" rows="10" disabled>
-<?php                       // TODO Aquí hay que cargar la lista 
+<?php
                             function escanearDirectorio($directorio_inicial, $flag){
                                 $directorio = scandir($directorio_inicial);
                                 foreach ($directorio as $variable) {
@@ -135,7 +135,7 @@
                             escanearDirectorio(getcwd(), 0);
                         ?>
                     </textarea>
-                    <form id="guardarForm" action="guardar.php" method="post">
+                    <form id="guardarForm" action="abrir.php" method="post">
                         <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Copie y pegue la ruta del archivo que desee abrir.">
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" type="submit">Abrir Archivo</button>

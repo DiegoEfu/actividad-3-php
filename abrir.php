@@ -1,27 +1,3 @@
-<?php
-    $directorio = preg_split('/\//',$_POST['nombre_archivo']);
-    $acc = "";
-    if(count($directorio) > 1){
-        foreach ($directorio as $value){
-            if($acc != ''){
-                $acc = $acc . '/' . $value;               
-            } else{
-                $acc = $value;
-            }            
-            if($value != $directorio[count($directorio)-1]){
-                if(!is_dir($acc)){
-                    mkdir($acc);
-                }
-            }
-        }
-    } else{
-        $acc = $_POST['nombre_archivo'];
-    }
-
-    $fp = fopen($acc, "w+");
-    fwrite($fp, $_POST['texto']);
-    fclose($fp);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,7 +72,7 @@
                     </li>
                     <li><b>Ubicación:</b>
                         <?php
-                            echo $datos['dirname'] . '\\';
+                            echo $datos['dirname'];
                         ?>                 
                     </li>
                     <li><b>Tamaño:</b> <?php 
@@ -178,6 +154,7 @@
                                             echo $directorio_inicial . '\\' . $variable;
                                             echo "\r\n";
                                         }
+                                        
                                     }
                                 }
                             }
@@ -197,4 +174,5 @@
     </div>
 
 </body>
-</html>
+</html> 
+            
