@@ -111,22 +111,20 @@
                 </div>
                 <div class="modal-body">
                     Lista de Archivos:
-                    <textarea name="lista" id="lista" cols="30" rows="10" disabled>
-<?php
-                            // TODO Aquí hay que cargar la lista 
-
+                    <textarea name="lista" class="form-control" id="lista" cols="30" rows="10" disabled>
+<?php                       // TODO Aquí hay que cargar la lista 
                             function escanearDirectorio($directorio_inicial, $flag){
                                 $directorio = scandir($directorio_inicial);
                                 foreach ($directorio as $variable) {
                                     if(!((strlen($variable) == 1 || strlen($variable) == 2) && ($variable == '.' || $variable == '..'))){
                                         // Verificar que sea un directorio
                                         if(!(str_contains($variable, '.'))){
-                                            escanearDirectorio($directorio_inicial . '/' . $variable, 1);
+                                            escanearDirectorio($directorio_inicial . '\\' . $variable, 1);
                                         } elseif ($flag == 0){
                                             echo $variable;
                                             echo "\r\n";
                                         } else{
-                                            echo $directorio_inicial . '/' . $variable;
+                                            echo $directorio_inicial . '\\' . $variable;
                                             echo "\r\n";
                                         }
                                         
@@ -138,10 +136,9 @@
                         ?>
                     </textarea>
                     <form id="guardarForm" action="guardar.php" method="post">
-                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Nombre del Archivo (colocar / para crear directorios y carpetas)">
-                        Archivos en: /
+                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Copie y pegue la ruta del archivo que desee abrir.">
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-primary" type="submit">Guardar Archivo</button>
+                            <button class="btn btn-primary" type="submit">Abrir Archivo</button>
                         </div>                        
                     </form>                    
                 </div>
