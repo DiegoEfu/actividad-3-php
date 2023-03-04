@@ -145,7 +145,7 @@
                                 foreach ($directorio as $variable) {
                                     if(!((strlen($variable) == 1 || strlen($variable) == 2) && ($variable == "." || $variable == ".."))){
                                         // Verificar que sea un directorio
-                                        if(!(str_contains($variable, "."))){
+                                        if(!(strpos($variable, "."))){
                                             escanearDirectorio($directorio_inicial . "\\" . $variable, 1);
                                         } elseif ($flag == 0){
                                             echo "<li>";
