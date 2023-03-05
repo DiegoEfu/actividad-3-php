@@ -41,8 +41,7 @@
                             Ayuda
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="ayuda">
-                            <li><a class="dropdown-item" href="#">Acerca de</a></li>
-                            <li><a class="dropdown-item" href="#">Buscar</a></li>
+                            <li><button data-bs-toggle="modal" data-bs-target="#acerca" class="dropdown-item">Acerca de</button></li>
                         </ul>
                     </li>
                 </ul>
@@ -70,6 +69,11 @@
                     <li><b>Último Acceso:</b> N/A </li>
                 </ul>
                 <hr>
+                <form action="" method="get" class="d-flex justify-content-center">
+                    <input type="text" name="busqueda" id="busqueda" class="form-control" placeholder="Texto a buscar...">
+                    <button class="btn btn-primary">Buscar</button>
+                </form>
+                <hr>
                 <small><b>Precaución:</b> Todo lo que se haga en este notepad será guardado en un servidor privado. Evite colocar información sensible.</small>
             </div>
         </div>
@@ -96,6 +100,23 @@
                         </div>                        
                     </form>
                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Acerca -->
+    <div class="modal fade" id="acerca" tabindex="-1" aria-labelledby="acerca" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="acercalabel">Acerca De</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Este bloc de notas fue creado por Diego Faria para la asignatura "Programación Web". <br>
+
+                    El desarrollo fue empezado el 2 de marzo y finalizado el 8 de marzo.
                 </div>
             </div>
         </div>

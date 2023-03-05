@@ -42,7 +42,6 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="ayuda">
                             <li><a class="dropdown-item" href="#">Acerca de</a></li>
-                            <li><a class="dropdown-item" href="#">Buscar</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -93,6 +92,11 @@
                     </li>
                 </ul>
                 <hr>
+                <form action="" method="get" class="d-flex justify-content-center">
+                    <input type="text" name="busqueda" id="busqueda" class="form-control" placeholder="Texto a buscar...">
+                    <button class="btn btn-primary">Buscar</button>
+                </form>
+                <hr>
                 <small><b>Precaución:</b> Todo lo que se haga en este notepad será guardado en un servidor privado. Evite colocar información sensible.</small>
             </div>
         </div>
@@ -115,7 +119,8 @@
                 <div class="modal-body">
                     El archivo será guardado en la ruta que ingrese aquí (se crearán las carpetas en caso de que no existan):
                     <form id="guardarForm" action="guardar.php" method="post">
-                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Nombre del Archivo (colocar / para crear directorios y carpetas)">
+                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Dirección del Archivo"
+                        value="<?php echo $_POST['nombre_archivo'] ?>">
                         <small><b>Ejemplo:</b> texto.txt creará un archivo con ese nombre y extensión en la raíz, carpeta/texto.txt creará una carpeta llamada carpeta y pondrá un archivo llamado texto.txt en ella.</small>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" type="submit">Guardar Archivo</button>
