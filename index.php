@@ -74,7 +74,7 @@
             </div>
         </div>
         <div class="col-8 border">
-            <textarea form="guardarForm" name="texto" id="texto" cols="30" rows="10" class="w-100 h-100 bg-dark text-white"></textarea>    
+            <textarea form="guardarForm" name="texto" id="texto"  rows="10" class="w-100 h-100 bg-dark text-white"></textarea>    
         </div>
     </div>
 
@@ -89,7 +89,7 @@
                 <div class="modal-body">
                     El archivo será guardado en la ruta que ingrese aquí (se crearán las carpetas en caso de que no existan):
                     <form id="guardarForm" action="guardar.php" method="post">
-                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Nombre del Archivo (colocar / para crear directorios y carpetas)">
+                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Dirección del Archivo (colocar / para crear directorios y carpetas)">
                         <small><b>Ejemplo:</b> texto.txt creará un archivo con ese nombre y extensión en la raíz, carpeta/texto.txt creará una carpeta llamada carpeta y pondrá un archivo llamado texto.txt en ella.</small>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" type="submit">Guardar Archivo</button>
@@ -116,20 +116,20 @@
                             function escanearDirectorio($directorio_inicial, $flag){
                                 $directorio = scandir($directorio_inicial);
                                 foreach ($directorio as $variable) {
+                                    if(!($variable[0] == '.'))
                                     if(!((strlen($variable) == 1 || strlen($variable) == 2) && ($variable == '.' || $variable == '..'))){
                                         // Verificar que sea un directorio
                                         if(!(strpos($variable, '.'))){
-                                            escanearDirectorio($directorio_inicial . '\\' . $variable, 1);
-                                        } elseif ($flag == 0){
-                                            echo '<li>';
+                                            if(file_exists($directorio_inicial . '\\' . $variable))
+                                                escanearDirectorio($directorio_inicial . '\\' . $variable, 1);
+                                        } elseif ($flag == 0 and file_exists($variable)){
+                                            echo '<li><a href="#" class="archivo">';
                                             echo $variable;
-                                            echo "\r\n";
-                                            echo '</li>';
-                                        } else{
-                                            echo '<li>';
+                                            echo '</a></li>';
+                                        } elseif(file_exists($directorio_inicial . '\\' . $variable)){
+                                            echo '<li><a href="#" class="archivo">';
                                             echo $directorio_inicial . '\\' . $variable;
-                                            echo "\r\n";
-                                            echo '</li>';
+                                            echo '</a></li>';
                                         }
                                         
                                     }
@@ -139,10 +139,10 @@
                             escanearDirectorio(getcwd(), 0);
                         ?>
                     </ul>
-                    <form id="guardarForm" action="abrir.php" method="post">
-                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Copie y pegue la ruta del archivo que desee abrir.">
+                    <form id="guardarForm" action="abrir.php" method="post" class="a">
+                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo2" placeholder="Copie y pegue la ruta del archivo que desee abrir.">
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-primary" type="submit">Abrir Archivo</button>
+                            <button class="btn btn-primary" type="submit" id="abrirarch">Abrir Archivo</button>
                         </div>                        
                     </form>                    
                 </div>
@@ -150,5 +150,24 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(() => {
+            $('.archivo').click((e) => {
+                console.log("A");
+                $('#nombre_archivo2').val($(e.target).text());
+            });
+
+            $('form.a').submit(() => {
+                if($('.archivo').toArray().some((e) => {console.log($(e).text()); return $(e).text() == $('#nombre_archivo2').val();})){
+                    return true;
+                } else{
+                    console.log($('.archivo').toArray());
+                    alert("La dirección no coincide con ninguna de las registradas.");                  
+                    return false;
+                }
+            });
+        });       
+    </script>
 </body>
 </html> 
