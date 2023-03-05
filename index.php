@@ -69,10 +69,10 @@
                     <li><b>Último Acceso:</b> N/A </li>
                 </ul>
                 <hr>
-                <form action="" method="get" class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center">
                     <input type="text" name="busqueda" id="busqueda" class="form-control" placeholder="Texto a buscar...">
-                    <button class="btn btn-primary">Buscar</button>
-                </form>
+                    <button id="buscar" class="btn btn-primary">Buscar</button>
+                </div>                    
                 <hr>
                 <small><b>Precaución:</b> Todo lo que se haga en este notepad será guardado en un servidor privado. Evite colocar información sensible.</small>
             </div>
@@ -175,6 +175,7 @@
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="crossorigin="anonymous"></script>
     <script>
         $(document).ready(() => {
+            let lastIndex = 0;
             $('.archivo').click((e) => {
                 console.log("A");
                 $('#nombre_archivo2').val($(e.target).text());
@@ -188,6 +189,31 @@
                     alert("La dirección no coincide con ninguna de las registradas.");                  
                     return false;
                 }
+            });
+
+            $('#buscar').click(() => {
+                let indice = $('#texto').val().indexOf($('#busqueda').val());
+                if(indice == -1){
+                    alert("No hay coincidencias");
+                } else{
+                    if(lastIndex >= indice && lastIndex != $('#texto').val().length)
+                        if($('#texto').val().slice(lastIndex+$('#busqueda').val().length).indexOf($('#busqueda').val()) != -1)
+                            indice = lastIndex + $('#texto').val().slice(lastIndex+$('#busqueda').val().length).indexOf($('#busqueda').val()) + $('#busqueda').val().length;
+                    
+                    $('#texto').prop('selectionEnd', indice);
+                    $('#texto').prop('selectionStart', indice);
+                    lastIndex = indice;
+                    $('#texto').focus();
+                }
+                return false;
+            });
+
+            $('#texto').blur(() => {
+                lastIndex = $('#texto').prop("selectionEnd");
+            });
+
+            $('#texto').focus(() => {
+                lastIndex = $('#texto').prop("selectionEnd");
             });
         });       
     </script>

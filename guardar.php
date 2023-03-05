@@ -116,10 +116,10 @@
                     </li>
                 </ul>
                 <hr>
-                <form action="" method="get" class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center">
                     <input type="text" name="busqueda" id="busqueda" class="form-control" placeholder="Texto a buscar...">
-                    <button class="btn btn-primary">Buscar</button>
-                </form>
+                    <button id="buscar" class="btn btn-primary">Buscar</button>
+                </div>                    
                 <hr>
                 <small><b>Precaución:</b> Todo lo que se haga en este notepad será guardado en un servidor privado. Evite colocar información sensible.</small>
             </div>
@@ -143,14 +143,30 @@
                 <div class="modal-body">
                     El archivo será guardado en la ruta que ingrese aquí (se crearán las carpetas en caso de que no existan):
                     <form id="guardarForm" action="guardar.php" method="post">
-                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Dirección del Archivo"
-                        value="<?php echo $_POST['nombre_archivo'] ?>">
+                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Dirección del Archivo (colocar / para crear directorios y carpetas)">
                         <small><b>Ejemplo:</b> texto.txt creará un archivo con ese nombre y extensión en la raíz, carpeta/texto.txt creará una carpeta llamada carpeta y pondrá un archivo llamado texto.txt en ella.</small>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" type="submit">Guardar Archivo</button>
                         </div>                        
                     </form>
                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Acerca -->
+    <div class="modal fade" id="acerca" tabindex="-1" aria-labelledby="acerca" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="acercalabel">Acerca De</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Este bloc de notas fue creado por Diego Faria para la asignatura "Programación Web". <br>
+
+                    El desarrollo fue empezado el 2 de marzo y finalizado el 8 de marzo.
                 </div>
             </div>
         </div>
@@ -209,6 +225,7 @@
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="crossorigin="anonymous"></script>
     <script>
         $(document).ready(() => {
+            let lastIndex = 0;
             $('.archivo').click((e) => {
                 console.log("A");
                 $('#nombre_archivo2').val($(e.target).text());
@@ -222,6 +239,31 @@
                     alert("La dirección no coincide con ninguna de las registradas.");                  
                     return false;
                 }
+            });
+
+            $('#buscar').click(() => {
+                let indice = $('#texto').val().indexOf($('#busqueda').val());
+                if(indice == -1){
+                    alert("No hay coincidencias");
+                } else{
+                    if(lastIndex >= indice && lastIndex != $('#texto').val().length)
+                        if($('#texto').val().slice(lastIndex+$('#busqueda').val().length).indexOf($('#busqueda').val()) != -1)
+                            indice = lastIndex + $('#texto').val().slice(lastIndex+$('#busqueda').val().length).indexOf($('#busqueda').val()) + $('#busqueda').val().length;
+                    
+                    $('#texto').prop('selectionEnd', indice);
+                    $('#texto').prop('selectionStart', indice);
+                    lastIndex = indice;
+                    $('#texto').focus();
+                }
+                return false;
+            });
+
+            $('#texto').blur(() => {
+                lastIndex = $('#texto').prop("selectionEnd");
+            });
+
+            $('#texto').focus(() => {
+                lastIndex = $('#texto').prop("selectionEnd");
             });
         });       
     </script>
