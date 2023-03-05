@@ -133,31 +133,32 @@
                 <div class="modal-body">
                     Lista de Archivos:
                     <ul>
-<?php
-                            function escanearDirectorio($directorio_inicial, $flag){
+                    <?php
+                            function escanearDirectorio($directorio_inicial, $flag, $acc){
                                 $directorio = scandir($directorio_inicial);
                                 foreach ($directorio as $variable) {
                                     if(!($variable[0] == '.'))
-                                    if(!((strlen($variable) == 1 || strlen($variable) == 2) && ($variable == '.' || $variable == '..'))){
+                                    if(!(($variable == '.' || $variable == '..'))){
                                         // Verificar que sea un directorio
                                         if(!(strpos($variable, '.'))){
-                                            if(file_exists($directorio_inicial . '\\' . $variable))
-                                                escanearDirectorio($directorio_inicial . '\\' . $variable, 1);
+                                                escanearDirectorio($directorio_inicial == './' ? $directorio_inicial . $variable : $directorio_inicial . '/' . $variable, 1, $acc != './' ? $acc . '/' . $variable : $acc . $variable);
                                         } elseif ($flag == 0 and file_exists($variable)){
                                             echo '<li><a href="#" class="archivo">';
                                             echo $variable;
                                             echo '</a></li>';
-                                        } elseif(file_exists($directorio_inicial . '\\' . $variable)){
+                                        } elseif(file_exists($acc. '/' . $variable)){
                                             echo '<li><a href="#" class="archivo">';
-                                            echo $directorio_inicial . '\\' . $variable;
+                                            echo $acc . '/' . $variable;
                                             echo '</a></li>';
+                                        } else{
+                                        	echo "error";
                                         }
                                         
                                     }
                                 }
                             }
 
-                            escanearDirectorio(getcwd(), 0);
+                            escanearDirectorio('./', 0, './');
                         ?>
                     </ul>
                     <form id="guardarForm" action="abrir.php" method="post" class="a">
