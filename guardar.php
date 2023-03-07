@@ -141,16 +141,37 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    Lista de Carpetas: <br>
+                    <?php
+                        function escanearCarpetas($directorio_inicial){
+                            $directorio = scandir($directorio_inicial);
+                            foreach ($directorio as $variable) {
+                                if(!($variable[0] == '.'))
+                                if(!(($variable == '.' || $variable == '..'))){
+                                    // Verificar que sea un directorio
+                                    if(!(strpos($variable, '.'))){
+                                        echo "<ul>";
+                                        echo '<li><a href="#" class="carpeta" data="' . $directorio_inicial . '/' . $variable . '/' . '">';
+                                        echo $variable;
+                                        echo '</a></li>';
+                                        escanearCarpetas($directorio_inicial . '/' . $variable);
+                                        echo '</ul>';
+                                    }
+                                    
+                                }
+                            }
+                        }
+
+                        escanearCarpetas('.');
+                    ?>
                     El archivo será guardado en la ruta que ingrese aquí (se crearán las carpetas en caso de que no existan):
                     <form id="guardarForm" action="guardar.php" method="post">
-                        <input pattern="(^[a-zA-Z0-9_.\-\(\)])([a-zA-Z0-9_.\-\(\)\/\\])+\.(.[\w]+)$" class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Dirección del Archivo (colocar / para crear directorios y carpetas)"
-                        value="<?php echo $_POST['nombre_archivo']; ?>">
-                        <small><b>Ejemplo:</b> texto.txt creará un archivo con ese nombre y extensión en la raíz, carpeta/texto.txt creará una carpeta llamada carpeta y pondrá un archivo llamado texto.txt en ella.</small>
+                        <input class="form-control" pattern="(^[a-zA-Z0-9_.\-\(\)])([a-zA-Z0-9_.\-\(\)\/\\])+\.(.[\w]+)$" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Dirección del Archivo (colocar / para crear directorios y carpetas)">
+                        <small><b>Ejemplo de rutas válidas:</b> texto.txt creará un archivo con ese nombre y extensión en la raíz, carpeta/texto.txt o ./carpeta/texto.txt creará una carpeta llamada carpeta y pondrá un archivo llamado texto.txt en ella.</small>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" type="submit">Guardar Archivo</button>
                         </div>                        
                     </form>
-                    
                 </div>
             </div>
         </div>
@@ -213,7 +234,7 @@
                         ?>
                     </ul>
                     <form id="guardarForm" action="abrir.php" method="post" class="a">
-                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo2" placeholder="Copie y pegue la ruta del archivo que desee abrir.">
+                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo2" placeholder="Dé click en el archivo que desea abrir.">
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" type="submit" id="abrirarch">Abrir Archivo</button>
                         </div>                        
@@ -261,6 +282,12 @@
 
             $('#texto').blur(() => {
                 lastIndex = $('#texto').prop("selectionEnd");
+            });
+
+            $('.carpeta').click((e) => {
+                console.log("AAAA");
+                console.log($(e.target).attr('data'));
+                $('#nombre_archivo').val($(e.target).attr('data'));
             });
 
             $('#texto').focus(() => {
