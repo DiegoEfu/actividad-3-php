@@ -119,7 +119,7 @@
                 <div class="modal-body">
                     El archivo será guardado en la ruta que ingrese aquí (se crearán las carpetas en caso de que no existan):
                     <form id="guardarForm" action="guardar.php" method="post">
-                        <input class="form-control" type="text" name="nombre_archivo" id="nombre_archivo" placeholder="Dirección del Archivo (colocar / para crear directorios y carpetas)">
+                        <input value="<?php echo $_POST['nombre_archivo']; ?>" class="form-control" type="text" pattern="(^[a-zA-Z0-9_.\-\(\)])([a-zA-Z0-9_.\-\(\)\/\\])+\.(.[\w]+)$" name="nombre_archivo" id="nombre_archivo" placeholder="Dirección del Archivo (colocar / para crear directorios y carpetas)">
                         <small><b>Ejemplo:</b> texto.txt creará un archivo con ese nombre y extensión en la raíz, carpeta/texto.txt creará una carpeta llamada carpeta y pondrá un archivo llamado texto.txt en ella.</small>
                         <div class="d-flex justify-content-center">
                             <button class="btn btn-primary" type="submit">Guardar Archivo</button>
