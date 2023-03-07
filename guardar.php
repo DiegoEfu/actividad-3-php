@@ -65,7 +65,7 @@
                             Ayuda
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="ayuda">
-                            <li><a class="dropdown-item" href="#">Acerca de</a></li>
+                            <li><button data-bs-toggle="modal" data-bs-target="#acerca" class="dropdown-item">Acerca de</button></li>
                         </ul>
                     </li>
                 </ul>
