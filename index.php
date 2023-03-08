@@ -60,11 +60,9 @@
                     <li><b>Tipo de Archivo:</b> N/A </li>
                     <li><b>Ubicación:</b> N/A </li>
                     <li><b>Tamaño:</b> N/A </li>
-                    <li><b>Tamaño en disco:</b>N/A </li>
                 </ul>                    
                 <hr>
                 <ul>
-                    <li><b>Creado:</b> N/A </li>
                     <li><b>Modificado:</b> N/A </li>
                     <li><b>Último Acceso:</b> N/A </li>
                 </ul>
